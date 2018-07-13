@@ -1,0 +1,42 @@
+﻿<Window x:Class="SimpleCalc.Views.CalculatorView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        ResizeMode="NoResize" SizeToContent="WidthAndHeight"
+        xmlns:vm="clr-namespace:SimpleCalc.ViewModels"
+        Background="{x:Static SystemColors.ControlBrush}"
+        mc:Ignorable="d" Title="Calculator">
+    <Window.Resources>
+        <vm:CalculatorViewModel x:Key="calculatorVM" />
+
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Margin" Value="1" />
+            <Setter Property="MinWidth" Value="48" />
+            <Setter Property="MinHeight" Value="48" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="Focusable" Value="False" />
+            <Setter Property="IsTabStop" Value="False" />
+        </Style>
+    </Window.Resources>
+    <DockPanel DataContext="{StaticResource calculatorVM}" Margin="4">
+        <Border DockPanel.Dock="Top" Margin="0,0,0,4"
+                BorderBrush="{x:Static SystemColors.ActiveBorderBrush}"
+                BorderThickness="1" Background="White">
+            <TextBlock Text="{Binding Path=DisplayText, Mode=OneWay}"
+                       TextAlignment="Right" FontSize="22" Padding="4,1" />
+        </Border>
+        <WrapPanel DockPanel.Dock="Right" Width="100">
+            <Button Command="{Binding Path=OperatorCommand}" CommandParameter="/" Content="/"/>
+            <Button Command="{Binding Path=CalculateCommand}" Content="="/>
+            <Button Command="{Binding Path=OperatorCommand}" CommandParameter="+" Content="+"/>
+            <Button Command="{Binding Path=ClearExpressionCommand}" Content="C"/>
+        </WrapPanel>
+        <UniformGrid Columns="3" Rows="4">
+            <Button Command="{Binding Path=NumericInputCommand}" CommandParameter="1" Content="1"/>
+            <Button Command="{Binding Path=NumericInputCommand}" CommandParameter="2" Content="2"/>
+            <Button Command="{Binding Path=NumericInputCommand}" CommandParameter="3" Content="3"/>
+            <Button Command="{Binding Path=NumericInputCommand}" CommandParameter="0" Content="0"/>
+        </UniformGrid>
+    </DockPanel>
+</Window>
